@@ -1,16 +1,60 @@
-# React + Vite
+# Todo List Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React Todo List application with comprehensive unit testing.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* ✅ Add, edit, delete todos
+* ✅ Filter by status (all / active / completed)
+* ✅ Sort by date, alphabetical order, priority
+* ✅ Priority levels (high / medium / low)
+* ✅ Statistics and completion rate
+* ✅ Local storage persistence
+* ✅ Fully responsive design
+* ✅ Comprehensive unit tests
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* React 18
+* Vitest (for unit testing)
+* CSS3 with modern layout
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+src/
+├── hooks/
+│   ├── useTodos.js            # Custom hook for todo management
+│   └── tests/
+│       └── useTodos.test.js   # Tests for custom hook
+├── utils/
+│   ├── todoUtils.js           # Utility functions
+│   └── tests/
+│       └── todoUtils.test.js  # Tests for utilities
+└── App.jsx                    # Main component
+```
+
+## Testing
+
+The project includes comprehensive unit tests:
+
+* **23 passing tests** covering all major functionality
+* Tests for utility functions (filtering, sorting, validation)
+* Tests for custom React hook
+* Mocked localStorage for testing
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
+npm test
+```
+
+## Test Coverage
+
+* ✅ Todo creation and validation
+* ✅ Filtering and sorting
+* ✅ Statistics calculation
+* ✅ Local storage operations
+* ✅ User interactions
