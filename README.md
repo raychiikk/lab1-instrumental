@@ -38,10 +38,15 @@ src/
 
 The project includes comprehensive unit tests:
 
-* **23 passing tests** covering all major functionality
+* **17 passing tests** covering all major functionality
 * Tests for utility functions (filtering, sorting, validation)
 * Tests for custom React hook
 * Mocked localStorage for testing
+
+### Test Breakdown
+
+* **todoUtils.test.js**: 10 tests for utility functions
+* **useTodos.test.js**: 7 tests for React custom hook
 
 ## Getting Started
 
