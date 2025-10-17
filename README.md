@@ -1,65 +1,16 @@
-# Todo List Application
+# React + Vite
 
-A modern React Todo List application with comprehensive unit testing.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-* ✅ Add, edit, delete todos
-* ✅ Filter by status (all / active / completed)
-* ✅ Sort by date, alphabetical order, priority
-* ✅ Priority levels (high / medium / low)
-* ✅ Statistics and completion rate
-* ✅ Local storage persistence
-* ✅ Fully responsive design
-* ✅ Comprehensive unit tests
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Tech Stack
+## React Compiler
 
-* React 18
-* Vitest (for unit testing)
-* CSS3 with modern layout
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Project Structure
+## Expanding the ESLint configuration
 
-```
-src/
-├── hooks/
-│   ├── useTodos.js            # Custom hook for todo management
-│   └── tests/
-│       └── useTodos.test.js   # Tests for custom hook
-├── utils/
-│   ├── todoUtils.js           # Utility functions
-│   └── tests/
-│       └── todoUtils.test.js  # Tests for utilities
-└── App.jsx                    # Main component
-```
-
-## Testing
-
-The project includes comprehensive unit tests:
-
-* **18 passing tests** covering all major functionality
-* Tests for utility functions (filtering, sorting, validation)
-* Tests for custom React hook
-* Mocked localStorage for testing
-
-### Test Breakdown
-
-* **todoUtils.test.js**: 10 tests for utility functions
-* **useTodos.test.js**: 7 tests for React custom hook
-
-## Getting Started
-
-```bash
-npm install
-npm run dev
-npm test
-```
-
-## Test Coverage
-
-* ✅ Todo creation and validation
-* ✅ Filtering and sorting
-* ✅ Statistics calculation
-* ✅ Local storage operations
-* ✅ User interactions
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
