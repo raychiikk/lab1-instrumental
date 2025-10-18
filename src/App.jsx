@@ -1,35 +1,212 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { useTodos } from './hooks/useTodos';
+import { getTodoStats } from './utils/todoUtils';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const {
+    todos,
+    allTodos,
+    filter,
+    setFilter,
+    sortBy,
+    setSortBy,
+    addTodo,
+    toggleTodo,
+    deleteTodo,
+    updateTodo,
+    clearCompleted,
+    clearAll
+  } = useTodos();
+
+  const [inputValue, setInputValue] = useState('');
+  const [priority, setPriority] = useState('low');
+  const [editingId, setEditingId] = useState(null);
+  const [editText, setEditText] = useState('');
+
+  const stats = getTodoStats(allTodos);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (inputValue.trim()) {
+      try {
+        addTodo(inputValue, { priority });
+        setInputValue('');
+        setPriority('low');
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+  };
+
+  const handleEdit = (todo) => {
+    setEditingId(todo.id);
+    setEditText(todo.text);
+  };
+
+  const handleSaveEdit = (id) => {
+    if (editText.trim()) {
+      try {
+        updateTodo(id, { text: editText.trim() });
+        setEditingId(null);
+        setEditText('');
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setEditText('');
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app">
+      <div className="container">
+        <header className="header">
+          <h1>📝 Todo List</h1>
+          <div className="stats">
+            <span>Всього: {stats.total}</span>
+            <span>Активних: {stats.active}</span>
+            <span>Виконано: {stats.completed}</span>
+            <span>Прогрес: {stats.completionRate}%</span>
+          </div>
+        </header>
+
+        <form onSubmit={handleSubmit} className="add-form">
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Додати нову задачу..."
+            className="input"
+          />
+          <select 
+            value={priority} 
+            onChange={(e) => setPriority(e.target.value)}
+            className="select"
+          >
+            <option value="low">Низький</option>
+            <option value="medium">Середній</option>
+            <option value="high">Високий</option>
+          </select>
+          <button type="submit" className="btn btn-primary">
+            Додати
+          </button>
+        </form>
+
+        <div className="controls">
+          <div className="filter-buttons">
+            <button
+              onClick={() => setFilter('all')}
+              className={`btn ${filter === 'all' ? 'btn-active' : ''}`}
+            >
+              Всі
+            </button>
+            <button
+              onClick={() => setFilter('active')}
+              className={`btn ${filter === 'active' ? 'btn-active' : ''}`}
+            >
+              Активні
+            </button>
+            <button
+              onClick={() => setFilter('completed')}
+              className={`btn ${filter === 'completed' ? 'btn-active' : ''}`}
+            >
+              Виконані
+            </button>
+          </div>
+
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="select"
+          >
+            <option value="date">За датою</option>
+            <option value="alphabetical">За алфавітом</option>
+            <option value="priority">За пріоритетом</option>
+          </select>
+        </div>
+
+        <ul className="todo-list">
+          {todos.length === 0 ? (
+            <li className="empty-message">
+              Немає задач
+            </li>
+          ) : (
+            todos.map((todo) => (
+              <li key={todo.id} className={`todo-item ${todo.completed ? 'completed' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => toggleTodo(todo.id)}
+                  className="checkbox"
+                />
+                
+                {editingId === todo.id ? (
+                  <div className="edit-form">
+                    <input
+                      type="text"
+                      value={editText}
+                      onChange={(e) => setEditText(e.target.value)}
+                      className="input"
+                      autoFocus
+                    />
+                    <button
+                      onClick={() => handleSaveEdit(todo.id)}
+                      className="btn btn-small btn-success"
+                    >
+                      Зберегти
+                    </button>
+                    <button
+                      onClick={handleCancelEdit}
+                      className="btn btn-small"
+                    >
+                      Скасувати
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <span className="todo-text">{todo.text}</span>
+                    <span className={`priority-badge priority-${todo.priority}`}>
+                      {todo.priority === 'high' ? '🔴' : todo.priority === 'medium' ? '🟡' : '🟢'}
+                    </span>
+                    <div className="todo-actions">
+                      <button
+                        onClick={() => handleEdit(todo)}
+                        className="btn btn-small"
+                        disabled={todo.completed}
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        onClick={() => deleteTodo(todo.id)}
+                        className="btn btn-small btn-danger"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </>
+                )}
+              </li>
+            ))
+          )}
+        </ul>
+
+        {allTodos.length > 0 && (
+          <div className="footer-actions">
+            <button onClick={clearCompleted} className="btn">
+              Очистити виконані
+            </button>
+            <button onClick={clearAll} className="btn btn-danger">
+              Очистити все
+            </button>
+          </div>
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
