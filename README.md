@@ -38,15 +38,15 @@ src/
 
 The project includes comprehensive unit tests:
 
-* **18 passing tests** covering all major functionality
-* Tests for utility functions (filtering, sorting, validation)
-* Tests for custom React hook
-* Mocked localStorage for testing
+* **29 passing tests** covering all major functionality
+* In-depth testing for utility functions (filtering, sorting, validation).
+* TState and side-effect testing for the custom React hook.
+* Mocked localStorage for testing persistence logic.
 
 ### Test Breakdown
 
-* **todoUtils.test.js**: 10 tests for utility functions
-* **useTodos.test.js**: 7 tests for React custom hook
+* **todoUtils.test.js**: 22 tests for utility functions (validation, filtering, sorting, stats).
+* **useTodos.test.js**: 7 tests for React custom hook (state logic, localStorage).
 
 ## Getting Started
 
@@ -58,8 +58,18 @@ npm test
 
 ## Test Coverage
 
-* ✅ Todo creation and validation
-* ✅ Filtering and sorting
-* ✅ Statistics calculation
-* ✅ Local storage operations
-* ✅ User interactions
+The test suite covers the following critical and edge-case scenarios:
+
+* ✅ **In-depth validation**: Testing for empty strings, whitespace trimming, string length limits (200 chars), and non-string inputs.
+
+* ✅ **Full filter logic**: Verifies 'all', 'active', 'completed', and empty list scenarios.
+
+* ✅ **All sorting methods**: Verifies sorting by date, priority, and alphabetical order.
+
+* ✅ **Accurate statistics**: Includes total, active, completed, and correct rounding for **completionRate**.
+
+* ✅ **ID Generation**: Ensures generated IDs are unique and match the expected format.
+
+* ✅ **Hook state management**: Ensures **add**, **toggle**, **delete**, and filter state changes work correctly.
+
+* ✅ **Local storage persistence**: Mocks localStorage to verify data is saved and loaded correctly on initialization.
