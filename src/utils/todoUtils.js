@@ -6,8 +6,8 @@ export const generateId = () => {
 };
 
 /**
-   * Валідує текст задачі
-   */
+    * Валідує текст задачі
+    */
 export const validateTodoText = (text) => {
     if (typeof text !== 'string') {
     throw new Error('Todo text must be a string');
@@ -27,8 +27,8 @@ export const validateTodoText = (text) => {
 };
 
 /**
-   * Фільтрує задачі за статусом
-   */
+    * Фільтрує задачі за статусом
+    */
 export const filterTodos = (todos, filter) => {
     switch (filter) {
     case 'active':
@@ -42,8 +42,8 @@ export const filterTodos = (todos, filter) => {
 };
 
 /**
-   * Сортує задачі
-   */
+    * Сортує задачі
+    */
 export const sortTodos = (todos, sortBy = 'date') => {
     const todosCopy = [...todos];
     
@@ -63,22 +63,24 @@ export const sortTodos = (todos, sortBy = 'date') => {
 };
 
 /**
-   * Рахує статистику задач
-   */
+    * Рахує статистику задач
+    */
 export const getTodoStats = (todos) => {
+    const completed = todos.filter(todo => todo.completed).length;
+    const total = todos.length;
     return {
-    total: todos.length,
-    completed: todos.filter(todo => todo.completed).length,
-    active: todos.filter(todo => !todo.completed).length,
-    completionRate: todos.length > 0 
-        ? Math.round((todos.filter(todo => todo.completed).length / todos.length) * 100) 
+    total: total,
+    completed: completed,
+    active: total - completed,
+    completionRate: total > 0 
+        ? Math.round((completed / total) * 100) 
         : 0
     };
 };
 
 /**
-   * Створює нову задачу
-   */
+    * Створює нову задачу
+    */
 export const createTodo = (text, options = {}) => {
     const validatedText = validateTodoText(text);
     
