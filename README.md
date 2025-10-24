@@ -73,3 +73,10 @@ The test suite covers the following critical and edge-case scenarios:
 * ✅ **Hook state management**: Ensures **add**, **toggle**, **delete**, and filter state changes work correctly.
 
 * ✅ **Local storage persistence**: Mocks localStorage to verify data is saved and loaded correctly on initialization.
+
+## Documentation
+
+The project documentation is automatically generated from JSDoc comments
+and published using GitHub Actions.
+
+You can view the latest documentation [here](https://github.com/raychiikk/lab1-instrumental/).

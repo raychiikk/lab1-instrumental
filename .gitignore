@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# .gitignore
+
+# ... (інші ваші правила)
+
+# JSDoc generated folder
+docs/
