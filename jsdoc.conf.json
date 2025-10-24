@@ -1,0 +1,20 @@
+{
+    "source": {
+    "include": ["src/hooks", "src/utils"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(node_modules|docs|\\.test\\.js)"
+    },
+    "plugins": ["plugins/markdown"],
+    "opts": {
+    "destination": "docs/",
+    "recurse": true,
+    "readme": "README.md",
+    "template": "node_modules/jsdoc/templates/default"
+    },
+    "templates": {
+    "default": {
+        "outputSourceFiles": false,
+        "layoutFile": "node_modules/jsdoc/templates/default/tmpl/layout.tmpl"
+    }
+    }
+}
