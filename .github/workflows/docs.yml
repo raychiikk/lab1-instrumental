@@ -1,0 +1,60 @@
+name: Build and Deploy Documentation
+
+# Тригер: запускати при push у гілки main або feature/docs-ci
+on:
+  push:
+    branches:
+      - main
+      - feature/docs-ci
+
+# Дозволи для GITHUB_TOKEN на запис в gh-pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Отримуємо код з репозиторію
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Налаштовуємо Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # Використовуємо актуальну LTS-версію Node.js
+          cache: 'npm'
+
+      # 3. Встановлюємо залежності (включно з jsdoc)
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Генеруємо документацію
+      # Використовуємо npx для запуску jsdoc з конфігом
+      - name: Generate JSDoc
+        run: npx jsdoc -c jsdoc.conf.json
+
+      # 5. Завантажуємо артефакт (папку docs/) для GitHub Pages
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs
+
+  deploy:
+    # Запускаємо деплой тільки після успішної збірки
+    needs: build
+    
+    # Налаштування для GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
+    runs-on: ubuntu-latest
+    steps:
+      # 6. Деплоїмо артефакт на GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
