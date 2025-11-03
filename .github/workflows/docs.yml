@@ -1,21 +1,23 @@
-name: Build and Deploy Documentation
+name: Build and Deploy App & Documentation
 
-# Тригер: запускати при push у гілки main або feature/docs-ci
 on:
   push:
     branches:
       - main
       - feature/docs-ci
 
-# Дозволи для GITHUB_TOKEN на запис в gh-pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
     steps:
       # 1. Отримуємо код з репозиторію
       - name: Checkout repository
@@ -25,36 +27,30 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20 # Використовуємо актуальну LTS-версію Node.js
+          node-version: 20
           cache: 'npm'
 
-      # 3. Встановлюємо залежності (включно з jsdoc)
+      # 3. Встановлюємо залежності
       - name: Install dependencies
         run: npm ci
 
-      # 4. Генеруємо документацію
-      # Використовуємо npx для запуску jsdoc з конфігом
+      # 4. ЗБИРАЄМО REACT-ДОДАТОК
+      # Цей крок створить папку 'dist'
+      - name: Build React App
+        run: npm run build
+
+      # 5. Генеруємо документацію
+      # Вона покладеться в 'dist/docs/' згідно з новим jsdoc.conf.json
       - name: Generate JSDoc
         run: npx jsdoc -c jsdoc.conf.json
 
-      # 5. Завантажуємо артефакт (папку docs/) для GitHub Pages
+      # 6. Завантажуємо артефакт (всю папку dist/)
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./docs
+          path: ./dist # Публікуємо всю папку dist
 
-  deploy:
-    # Запускаємо деплой тільки після успішної збірки
-    needs: build
-    
-    # Налаштування для GitHub Pages
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-      
-    runs-on: ubuntu-latest
-    steps:
-      # 6. Деплоїмо артефакт на GitHub Pages
+      # 7. Деплоїмо на GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
