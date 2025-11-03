@@ -79,4 +79,4 @@ The test suite covers the following critical and edge-case scenarios:
 The project documentation is automatically generated from JSDoc comments
 and published using GitHub Actions.
 
-You can view the latest documentation [here](https://github.com/raychiikk/lab1-instrumental/).
+You can view the latest documentation [here](https://raychiikk.github.io/lab1-instrumental/docs/).
