@@ -1,8 +1,8 @@
 {
     "source": {
-    "include": ["src/hooks", "src/utils"],
+    "include": ["src"],
     "includePattern": ".+\\.js(doc|x)?$",
-    "excludePattern": "(node_modules|dist|\\.test\\.js)"
+    "excludePattern": "(node_modules|dist|build|\\.test\\.js|\\.test\\.jsx)"
     },
     "plugins": ["plugins/markdown"],
     "opts": {
