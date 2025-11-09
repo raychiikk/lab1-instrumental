@@ -3,6 +3,12 @@ import { useTodos } from './hooks/useTodos';
 import { getTodoStats } from './utils/todoUtils';
 import './App.css';
 
+/**
+ * @file Головний компонент додатку Todo List.
+ * @brief Рендерить інтерфейс, керує станом форми та обробляє взаємодію користувача.
+ * Використовує хук `useTodos` для основної логіки.
+ * @returns {JSX.Element} JSX-розмітка всього додатку.
+ */
 function App() {
   const {
     todos,
@@ -26,6 +32,11 @@ function App() {
 
   const stats = getTodoStats(allTodos);
 
+  /**
+   * Обробник відправки форми.
+   * Створює нову задачу через `addTodo`.
+   * @param {React.FormEvent} e - Подія форми.
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue.trim()) {
@@ -39,11 +50,19 @@ function App() {
     }
   };
 
+  /**
+   * Активує режим редагування для задачі.
+   * @param {Todo} todo - Об'єкт задачі, що редагується.
+   */
   const handleEdit = (todo) => {
     setEditingId(todo.id);
     setEditText(todo.text);
   };
 
+  /**
+   * Зберігає зміни після редагування.
+   * @param {string} id - ID задачі, що зберігається.
+   */
   const handleSaveEdit = (id) => {
     if (editText.trim()) {
       try {
@@ -56,6 +75,9 @@ function App() {
     }
   };
 
+  /**
+   * Скасовує режим редагування.
+   */
   const handleCancelEdit = () => {
     setEditingId(null);
     setEditText('');
@@ -82,8 +104,8 @@ function App() {
             placeholder="Додати нову задачу..."
             className="input"
           />
-          <select 
-            value={priority} 
+          <select
+            value={priority}
             onChange={(e) => setPriority(e.target.value)}
             className="select"
           >
@@ -143,7 +165,7 @@ function App() {
                   onChange={() => toggleTodo(todo.id)}
                   className="checkbox"
                 />
-                
+
                 {editingId === todo.id ? (
                   <div className="edit-form">
                     <input
