@@ -9,12 +9,28 @@
     "destination": "dist/docs/",
     "recurse": true,
     "readme": "README.md",
-    "template": "node_modules/jsdoc/templates/default"
+    "template": "node_modules/docdash"
     },
     "templates": {
     "default": {
-        "outputSourceFiles": false,
-        "layoutFile": "node_modules/jsdoc/templates/default/tmpl/layout.tmpl"
+        "outputSourceFiles": false
+    }
+    },
+    "docdash": {
+    "static": true,
+    "search": true,
+    "collapse": true,
+    "sectionOrder": [
+        "Global",
+        "Modules",
+        "Typedefs"
+    ],
+    "menu": {
+        "GitHub Repository": {
+        "href": "https://github.com/raychiikk/lab1-instrumental",
+        "target": "_blank",
+        "class": "menu-item"
+        }
     }
     }
 }
