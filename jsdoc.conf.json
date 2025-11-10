@@ -1,36 +1,59 @@
 {
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc", "closure"]
+    },
     "source": {
-    "include": ["src"],
-    "includePattern": ".+\\.js(doc|x)?$",
-    "excludePattern": "(node_modules|dist|build|\\.test\\.js|\\.test\\.jsx)"
+        "include": ["src"],
+        "includePattern": ".+\\.(js|jsx)$",
+        "excludePattern": "(node_modules|dist|build|\\.test\\.js|\\.test\\.jsx)"
     },
     "plugins": ["plugins/markdown"],
-    "opts": {
-    "destination": "dist/docs/",
-    "recurse": true,
-    "readme": "README.md",
-    "template": "node_modules/docdash"
-    },
     "templates": {
-    "default": {
-        "outputSourceFiles": false
-    }
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "default": {
+            "outputSourceFiles": true
+        }
+    },
+    "opts": {
+        "destination": "dist/docs/",
+        "encoding": "utf8",
+        "private": true,
+        "recurse": true,
+        "template": "node_modules/docdash",
+        "readme": "README.md"
     },
     "docdash": {
-    "static": true,
-    "search": true,
-    "collapse": true,
-    "sectionOrder": [
-        "Global",
-        "Modules",
-        "Typedefs"
-    ],
-    "menu": {
-        "GitHub Repository": {
-        "href": "https://github.com/raychiikk/lab1-instrumental",
-        "target": "_blank",
-        "class": "menu-item"
-        }
-    }
+        "static": true,
+        "sort": true,
+        "search": true,
+        "collapse": true,
+        "wrap": true,
+        "typedefs": true,
+        "navLevel": 2,
+        "private": false,
+        "removeQuotes": "none",
+        "menu": {
+            "GitHub Repository": {
+                "href": "https://github.com/raychiikk/lab1-instrumental",
+                "target": "_blank",
+                "class": "menu-item github"
+            },
+            "Live App": {
+                "href": "https://raychiikk.github.io/lab1-instrumental/",
+                "target": "_blank"
+            }
+        },
+        "sectionOrder": [
+            "Classes",
+            "Modules", 
+            "Externals",
+            "Events",
+            "Namespaces",
+            "Mixins",
+            "Tutorials",
+            "Interfaces"
+        ]
     }
 }
