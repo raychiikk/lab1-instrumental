@@ -45,15 +45,16 @@
                 "target": "_blank"
             }
         },
-        "sectionOrder": [
-            "Classes",
-            "Modules", 
-            "Externals",
-            "Events",
-            "Namespaces",
-            "Mixins",
-            "Tutorials",
-            "Interfaces"
-        ]
+"sectionOrder": [
+        "Global",
+        "Modules",
+        "Typedefs",
+        "Classes",
+        "Externals",
+        "Events",
+        "Namespaces",
+        "Mixins",
+        "Interfaces"
+    ]
     }
 }
