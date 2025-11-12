@@ -1,0 +1,56 @@
+name: Build and Deploy App & Documentation
+
+on:
+  push:
+    branches:
+      - main
+      - feature/docs-ci
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
+    steps:
+      # 1. Отримуємо код з репозиторію
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Налаштовуємо Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # 3. Встановлюємо залежності
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. ЗБИРАЄМО REACT-ДОДАТОК
+      # Цей крок створить папку 'dist'
+      - name: Build React App
+        run: npm run build
+
+      # 5. Генеруємо документацію
+      # Вона покладеться в 'dist/docs/' згідно з новим jsdoc.conf.json
+      - name: Generate JSDoc
+        run: npx jsdoc -c jsdoc.conf.json
+
+      # 6. Завантажуємо артефакт (всю папку dist/)
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist # Публікуємо всю папку dist
+
+      # 7. Деплоїмо на GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
